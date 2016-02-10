@@ -117,7 +117,7 @@ func (repo *Repository) getCommit(id sha1) (*Commit, error) {
 		repo.commitCache = make(map[sha1]*Commit, 10)
 	}
 
-	_, _, dataRc, err := repo.getRawObject(id, false)
+	_, _, dataRc, err := repo.GetRawObject(id, false)
 	if err != nil {
 		return nil, err
 	}

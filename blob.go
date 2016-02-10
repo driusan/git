@@ -16,7 +16,7 @@ type Blob struct {
 }
 
 func (b *Blob) Data() (io.ReadCloser, error) {
-	_, _, dataRc, err := b.ptree.repo.getRawObject(b.Id, false)
+	_, _, dataRc, err := b.ptree.repo.GetRawObject(b.Id, false)
 	if err != nil {
 		return nil, err
 	}

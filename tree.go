@@ -125,7 +125,7 @@ func NewTree(repo *Repository, id sha1) *Tree {
 }
 
 func (t *Tree) Scanner() (*TreeScanner, error) {
-	_, _, r, err := t.repo.getRawObject(t.Id, false)
+	_, _, r, err := t.repo.GetRawObject(t.Id, false)
 	if err != nil {
 		return nil, err
 	}

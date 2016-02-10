@@ -70,7 +70,7 @@ func (repo *Repository) haveObject(id sha1) (found, packed bool, err error) {
 	return
 }
 
-func (repo *Repository) getRawObject(id sha1, metaOnly bool) (ObjectType, int64, io.ReadCloser, error) {
+func (repo *Repository) GetRawObject(id sha1, metaOnly bool) (ObjectType, int64, io.ReadCloser, error) {
 	sha1 := id.String()
 	found, packed, err := repo.haveObject(id)
 	switch {
@@ -90,7 +90,7 @@ func (repo *Repository) getRawObject(id sha1, metaOnly bool) (ObjectType, int64,
 
 // Get the type of an object.
 func (repo *Repository) objectType(id sha1) (ObjectType, error) {
-	objtype, _, _, err := repo.getRawObject(id, true)
+	objtype, _, _, err := repo.GetRawObject(id, true)
 	if err != nil {
 		return 0, err
 	}
@@ -99,6 +99,6 @@ func (repo *Repository) objectType(id sha1) (ObjectType, error) {
 
 // Get (inflated) size of an object.
 func (repo *Repository) objectSize(id sha1) (int64, error) {
-	_, length, _, err := repo.getRawObject(id, true)
+	_, length, _, err := repo.GetRawObject(id, true)
 	return length, err
 }

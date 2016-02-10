@@ -56,7 +56,7 @@ func (repo *Repository) getTag(id sha1) (*Tag, error) {
 		repo.tagCache = make(map[sha1]*Tag, 10)
 	}
 
-	tp, _, dataRc, err := repo.getRawObject(id, false)
+	tp, _, dataRc, err := repo.GetRawObject(id, false)
 	if err != nil {
 		return nil, err
 	}
