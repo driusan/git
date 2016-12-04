@@ -24,6 +24,9 @@ type Tree struct {
 	entriesParsed bool
 }
 
+func (t *Tree) String() string {
+	return t.Id.String()
+}
 // The entries will be traversed in the specified order,
 // children subtrees will be automatically loaded as required, and the
 // callback will be called once per blob with the current (relative) root
