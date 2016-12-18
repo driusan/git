@@ -149,13 +149,30 @@ func (repo *Repository) StoreObjectLoose(
 		return id, nil
 	}
 
-	err = os.Mkdir(filepath.Dir(objectPath), 0775)
-	if err != nil && !os.IsExist(err) {
+	err = os.MkdirAll(filepath.Dir(objectPath), 0775)
+	if err != nil {
 		// Failed to create the directory, and not because it already exists.
 		return [20]byte{}, err
 	}
 
-	err = os.Rename(fd.Name(), objectPath)
+	copy, err := os.Create(objectPath)
+	if err != nil {
+		return [20]byte{}, err
+	}
+	defer copy.Close()
+	original, err := os.Open(fd.Name())
+	if err != nil {
+		return [20]byte{}, err
+	}
+	defer original.Close()
+
+	_, err = io.Copy(copy, original)
+	if err != nil {
+		return [20]byte{}, err
+	}
+
+	original.Close()
+	err = os.Remove(fd.Name())
 	if err != nil {
 		return [20]byte{}, err
 	}
